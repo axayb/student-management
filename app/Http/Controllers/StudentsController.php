@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStudentRequest;
 use App\Models\Students;
+use App\Models\Teachers;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
@@ -14,7 +17,10 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        //
+
+       $students=Students::orderBy('name','asc')->paginate(5);
+       $teachers=Teachers::all();
+       return view('admin.students.index',compact('students','teachers'));
     }
 
     /**
@@ -33,9 +39,15 @@ class StudentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        //
+      $student= new Students();
+      $student->name=$request->name;
+      $student->age=$request->age;
+      $student->gender=$request->gender;
+      $student->teacher_id=$request->teacher;
+      $student->save();
+      return redirect()->back()->with('success','Student Created successfully');
     }
 
     /**
@@ -55,9 +67,11 @@ class StudentsController extends Controller
      * @param  \App\Models\Students  $students
      * @return \Illuminate\Http\Response
      */
-    public function edit(Students $students)
+    public function edit($students)
     {
-        //
+        $students=Students::find($students);
+        $teachers=Teachers::all();
+        return view('admin.students.edit',compact('students','teachers')); 
     }
 
     /**
@@ -67,19 +81,21 @@ class StudentsController extends Controller
      * @param  \App\Models\Students  $students
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Students $students)
+    public function update(StoreStudentRequest $request,$id)
     {
-        //
+       $students=Students::find($id);
+       $students->name=$request->name;
+       $students->age=$request->age;
+       $students->gender=$request->gender;
+       $students->teacher_id=$request->teacher;
+       $students->save();
+       return redirect()->back()->with('success','Student Updated SuccessFully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Students  $students
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Students $students)
+   
+    public function destroy($students)
     {
-        //
+        Students::find($students)->delete();
+        return redirect()->back()->with('success','Student Deleted successfully');
     }
 }

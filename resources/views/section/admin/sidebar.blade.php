@@ -26,15 +26,10 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
-                </a>
-              </li>
+  
     
-          <li class="nav-item ">
-            <a href="#" class="nav-link">
+          <li class="nav-item  {{ request()->is('*students*') || request()->is('*student-marks*') ? ' menu-open' :''}}">
+            <a href="#" class="nav-link {{ request()->is('*students*') ? ' active' :''}} " >
               <i class="nav-icon fas fa-user-circle "></i>
               <p>
                 Student Management
@@ -42,22 +37,16 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link">
+              <li class="nav-item ">
+                <a href="{{route('admin.students.index')}}" class="nav-link {{ request()->is('*students*') ? 'active' :''}}">
                   <i class="far fa-circle  nav-icon"></i>
                   <p>Students</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index.html" class="nav-link">
+                <a href="{{route('admin.student-marks.index')}}" class="nav-link {{request()->is('*student-marks*') ? 'active':''}}">
                   <i class="far fa-circle  nav-icon"></i>
                   <p>Student marks</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Teachers</p>
                 </a>
               </li>
             </ul>

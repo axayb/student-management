@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Teachers;
 use Illuminate\Database\Seeder;
 
-class StudentsSeeder extends Seeder
+class TeachersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,11 @@ class StudentsSeeder extends Seeder
      */
     public function run()
     {
-        //
+       Teachers::Create(
+           ['name'=>'Katie']
+       );
+       Teachers::Create(
+        ['name'=>'Max']
+    );
     }
 }
